@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wisdom Vault</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      color: #222;
+      transition: background 0.3s, color 0.3s;
+    }
+    header {
+      background-color: #4b4b4b;
+      color: white;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      margin: 0;
+    }
+    .dark-mode {
+      background-color: #1f1f1f;
+      color: #ddd;
+    }
+    .container {
+      padding: 1rem;
+    }
+    img.watermarked, video.watermarked {
+      position: relative;
+      max-width: 100%;
+      pointer-events: none;
+    }
+    .watermark {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.6);
+      background: rgba(0, 0, 0, 0.3);
+      padding: 2px 6px;
+      border-radius: 4px;
+      pointer-events: none;
+    }
+    .media-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+    .search-box {
+      margin-bottom: 1rem;
+    }
+    .search-box input {
+      padding: 8px;
+      width: 100%;
+      max-width: 400px;
+      font-size: 1rem;
+    }
+    button {
+      background: #444;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body oncontextmenu="return false">
+  <header>
+    <h1>Wisdom Vault</h1>
+    <button onclick="toggleDarkMode()">🌙 Toggle Dark Mode</button>
+  </header>
+  <div class="container">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search wisdom..." oninput="searchPosts()">
+    </div>
+    <div id="posts">
+      <div class="post" data-title="Life Tip 1">
+        <h2>Life Tip 1</h2>
+        <p>Always be kind. You never know what someone is going through.</p>
+        <div class="media-wrapper">
+          <img src="example1.jpg" alt="Example" class="watermarked">
+          <div class="watermark">@dushyant</div>
+        </div>
+      </div>
+      <div class="post" data-title="Lesson on Trust">
+        <h2>Lesson on Trust</h2>
+        <p>Trust is built in drops and lost in buckets.</p>
+        <div class="media-wrapper">
+          <video class="watermarked" controls>
+            <source src="example2.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <div class="watermark">@dushyant</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    }
+    function loadDarkMode() {
+      const enabled = localStorage.getItem('darkMode') === 'true';
+      if (enabled) document.body.classList.add('dark-mode');
+    }
+    function searchPosts() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const posts = document.querySelectorAll('.post');
+      posts.forEach(post => {
+        const title = post.getAttribute('data-title').toLowerCase();
+        post.style.display = title.includes(query) ? 'block' : 'none';
+      });
+    }
+    loadDarkMode();
+  </script>
+</body>
+</html>
